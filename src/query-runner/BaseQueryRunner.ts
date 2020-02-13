@@ -391,6 +391,7 @@ export abstract class BaseQueryRunner {
         if (this.sqlMemoryMode === true)
             return Promise.resolve() as Promise<any>;
 
+        await PromiseUtils.runInSequence(downQueries, downQuery => this.query(downQuery.query, downQuery.parameters));
         await PromiseUtils.runInSequence(upQueries, upQuery => this.query(upQuery.query, upQuery.parameters));
     }
 
